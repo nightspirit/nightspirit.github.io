@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Battleship.io React | Po-folio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="So we decide to try out a framework per week to build a simple battleship game. This is gonna be a 4 weeks POTW challenge. Since I am working on a product relate to websocket, I have a crazy idea popp">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Battleship.io React">
+<meta property="og:url" content="http://pofolio.cc/2015/02/08/battleshipio-react/index.html">
+<meta property="og:site_name" content="Po-folio">
+<meta property="og:description" content="So we decide to try out a framework per week to build a simple battleship game. This is gonna be a 4 weeks POTW challenge. Since I am working on a product relate to websocket, I have a crazy idea popp">
+<meta property="og:image" content="http://pofolio.cc/images/battleship02.jpg">
+<meta property="og:image" content="http://pofolio.cc/images/battleship01.jpg">
+<meta property="og:updated_time" content="2015-07-24T04:55:46.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Battleship.io React">
+<meta name="twitter:description" content="So we decide to try out a framework per week to build a simple battleship game. This is gonna be a 4 weeks POTW challenge. Since I am working on a product relate to websocket, I have a crazy idea popp">
+  
+    <link rel="alternative" href="/atom.xml" title="Po-folio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="/css/extend.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Po-folio</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Full Stack JavaScript Ninja</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-home-icon" class="nav-icon" href="/"></a>
+        
+          <a id="nav-archives-icon" class="nav-icon" href="/archives"></a>
+        
+          <a id="nav-facebook" class="nav-icon" href="http://www.facebook.com/nightspirit"></a>
+        
+          <a id="nav-linkedin" class="nav-icon" href="http://www.linkedin.com/in/pochenlin"></a>
+        
+          <a id="nav-github" class="nav-icon" href="http://github.com/nightspirit"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-battleshipio-react" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Battleship.io React
+    </h1>
+  
+
+      </header>
+    
+    <time class="article-date" datetime="2015-02-08T08:00:01.000Z" itemprop="datePublished">02-08-2015</time>
+    
+  </div>
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <img src="/images/battleship02.jpg">
+<p>So we decide to try out a framework per week to build a simple battleship game. This is gonna be a 4 weeks POTW challenge. Since I am working on a product relate to websocket, I have a crazy idea popping up.</p>
+<p><em>“Hey ~ it’s gonna be so cool if I can build <strong>a websocket server to manage the game in real time</strong>. So people can battle with each other online.”</em></p>
+<a id="more"></a>
+<p>It tooks me for a weekend to come up the source code. I build the game server with node.js, socket.io, express. Those are well built packages and works great.</p>
+<img src="/images/battleship01.jpg">
+<p>And I come up a <a href="http://battleship.io.pofolio.cc" target="_blank" rel="external">command line based interface</a> example for pitching my colleagues. The idea is, server side leverages the communication and game logic. Client side just focus on actual UI. As long as the clients on the same channel, no matter what UI it is, they can start the game and fight with each other.</p>
+<p>I make it open source and put it on <a href="https://github.com/nightspirit/battleship.io" target="_blank" rel="external">github</a>.</p>
+<p>POTW kick off. This week we are trying out “REACT” which I play around recently but haven’t use it for any project yet. Seems like it’s goona be a good practice for me.</p>
+<p>The first challenge is how to make the interactive maps. React is not directly manipulating DOM which I can’t do it like jQuery way. What I can do is only manipulating data and then pass to React to render. I must to find a way to translate data and game state to real presentation. My solution is predefined a series of CSS class for sizing and positioning. By mixing the css class I can pretty much get any possible state of display.</p>
+<p>The second challenge is to get used to React and flux flow. I choose <a href="http://fluxxor.com/" target="_blank" rel="external">fluxxor</a> as my flux engine and I find out I;ve already used the same concept before I heard this fancy term “FLUX” in many other projects. This design pattern might be the best way to handle async data flow so far.</p>
+<p>Here is the <a href="http://battleship.io.pofolio.cc/react/" target="_blank" rel="external">outcome</a>.</p>
+<p>I like React but I realize if I want to unleash the power of it. I should write my code on server side and build the production code with browserify and gulp. So every single component, flux datastore can be modularized. And then by natural of node require system, all dependency issues can be solve like a charm. Which sounds pretty amazing, I will spend more time digging into it.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pofolio.cc/2015/02/08/battleshipio-react/" data-id="cich670xt000x9oosn5bwfx21" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Battleship-io/">Battleship.io</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/NodeJs/">NodeJs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/ReactJs/">ReactJs</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebDevelop/">WebDevelop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/socket-io/">socket.io</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/03/09/javascript-how-to-promise-well/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Javascript - How to promise well
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/01/26/ngUpload/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Angular Directive For blueimp/jQuery-File-Upload</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+			&copy; 2015 Pochen Lin | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> | Theme <a href="https://github.com/steven5538/hexo-theme-athena" target="_blank">Athena</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Arduino &amp; Processing Serial communication | Po-folio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="People are asking me how to make connection between Arduino and Processing. Here is the trick.
+We can separate in two parts. Let’s go through the Processing part first. At the beginning you have to im">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arduino & Processing Serial communication">
+<meta property="og:url" content="http://pofolio.cc/2010/03/31/Arduino-Processing-Serial/index.html">
+<meta property="og:site_name" content="Po-folio">
+<meta property="og:description" content="People are asking me how to make connection between Arduino and Processing. Here is the trick.
+We can separate in two parts. Let’s go through the Processing part first. At the beginning you have to im">
+<meta property="og:image" content="http://pofolio.cc/images/2010-03-31_114909.jpg">
+<meta property="og:updated_time" content="2015-07-24T04:55:46.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Arduino & Processing Serial communication">
+<meta name="twitter:description" content="People are asking me how to make connection between Arduino and Processing. Here is the trick.
+We can separate in two parts. Let’s go through the Processing part first. At the beginning you have to im">
+  
+    <link rel="alternative" href="/atom.xml" title="Po-folio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="/css/extend.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Po-folio</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Full Stack JavaScript Ninja</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-home-icon" class="nav-icon" href="/"></a>
+        
+          <a id="nav-archives-icon" class="nav-icon" href="/archives"></a>
+        
+          <a id="nav-facebook" class="nav-icon" href="http://www.facebook.com/nightspirit"></a>
+        
+          <a id="nav-linkedin" class="nav-icon" href="http://www.linkedin.com/in/pochenlin"></a>
+        
+          <a id="nav-github" class="nav-icon" href="http://github.com/nightspirit"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Arduino-Processing-Serial" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Arduino &amp; Processing Serial communication
+    </h1>
+  
+
+      </header>
+    
+    <time class="article-date" datetime="2010-03-31T07:00:00.000Z" itemprop="datePublished">03-31-2010</time>
+    
+  </div>
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <img src="/images/2010-03-31_114909.jpg">
+<p>People are asking me how to make connection between Arduino and Processing. Here is the trick.</p>
+<p>We can separate in two parts. Let’s go through the Processing part first. At the beginning you have to import the serial library for processing. Then create a serial object and assign the particular arguments at the setup phase. Afterward, If you are using the keyboard as the input device you need to rewrite the <strong>keyPressd()</strong> and <strong>KeyReleased()</strong> function for keyevents.</p>
+<a id="more"></a>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">import processing.serial;  // import serial lib&#10;Serial port; // create a Serial object named port&#10;char keyIndex; // the variable which store the previous key value&#10;void setup() &#123;&#10;  println(Serial.list());  // list all the COM ports&#10;  // Setup serial object, the second argument should be the same as Arduino&#10;  // if you don&#8217;t know what it is just check the COM ports list in the debug panel.&#10;  // the third argument is the transmission rate&#10;  port = new Serial(this, Serial.list()[1], 9600); &#125;&#10;&#10;  void draw()&#123;  // main loop. Nothing to do here.&#10;  &#125;&#10;&#10;  // Keyevent handler&#10;  // When key has been pressed,&#10;  // the keyIndex will be assigned the uppercase ASCII char&#10;  void keyPressed() &#123;&#10;    if(key &#62;= &#39;A&#39; &#38;&#38; key &#60;= &#39;z&#39;) &#123;&#10;      if(key &#62;= &#39;Z&#39;) keyIndex = key;&#10;      else keyIndex = key-32;&#10;    &#125;&#10;  &#125;&#10;  // When key has been released then send out serial msg&#10;  void keyReleased() &#123;&#10;    println(&#34;SEND:&#34; + char(keyIndex));  // Debug msg&#10;    port.write(keyIndex);     // Send out serial msg&#10;  &#125;&#10;&#125;&#10;&#10;// On the Arduino side, you have to receive the message and change the behavior.&#10;// Simply use switch-case or if statement to build up the handler.&#10;void setup() &#123;&#10;  Serial.begin(9600);  // setup serial communication&#10;&#125;&#10;&#10;void loop() &#123;&#10;  char val = 0;&#10;  if (Serial.available()) val = Serial.read();  // read incoming msg&#10;&#10;  switch(val)&#123;&#10;  case &#39;A&#39;:&#10;  //do something&#10;  break;&#10;  case &#39;B&#39;:&#10;  //do something&#10;  break;&#10;  &#8230;&#10;  &#8230;&#10;  &#8230;&#10;  default:&#10;  //do something&#10;  break;&#10;  &#125;&#10;&#125;</span><br></pre></td></tr></table></figure>
+<p>Example:<br><div class="video-container"><iframe src="//www.youtube.com/embed/7iRWFj4Dy6E" frameborder="0" allowfullscreen></iframe></div></p>
+<p>Now you got the basic idea how they interact with each other. You can use this concept in any other application.</p>
+<p>Good luck!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pofolio.cc/2010/03/31/Arduino-Processing-Serial/" data-id="cich670z7004o9oosknyljlxk" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arduino/">Arduino</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KimonoMonster/">KimonoMonster</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2010/05/23/Kimono-Monsters-Maker-Faire-2010/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Kimono Monsters @ Maker Faire 2010
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/02/19/Arduino-Xbee-LCD/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Arduino + Xbee + 2x16 Chars LCD</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+			&copy; 2015 Pochen Lin | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> | Theme <a href="https://github.com/steven5538/hexo-theme-athena" target="_blank">Athena</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

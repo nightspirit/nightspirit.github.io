@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>ngPaginator | Po-folio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="After serveral angular projects, I found out it’s really helpful to warp the pagination logic into directive. Make it open source and release on github. Feel free to use. :)
+githublive demo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ngPaginator">
+<meta property="og:url" content="http://pofolio.cc/2014/09/02/ngPaginator/index.html">
+<meta property="og:site_name" content="Po-folio">
+<meta property="og:description" content="After serveral angular projects, I found out it’s really helpful to warp the pagination logic into directive. Make it open source and release on github. Feel free to use. :)
+githublive demo">
+<meta property="og:image" content="http://pofolio.cc/images/ngpaginator.jpg">
+<meta property="og:updated_time" content="2015-07-24T04:55:46.705Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="ngPaginator">
+<meta name="twitter:description" content="After serveral angular projects, I found out it’s really helpful to warp the pagination logic into directive. Make it open source and release on github. Feel free to use. :)
+githublive demo">
+  
+    <link rel="alternative" href="/atom.xml" title="Po-folio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="/css/extend.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Po-folio</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Full Stack JavaScript Ninja</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-home-icon" class="nav-icon" href="/"></a>
+        
+          <a id="nav-archives-icon" class="nav-icon" href="/archives"></a>
+        
+          <a id="nav-facebook" class="nav-icon" href="http://www.facebook.com/nightspirit"></a>
+        
+          <a id="nav-linkedin" class="nav-icon" href="http://www.linkedin.com/in/pochenlin"></a>
+        
+          <a id="nav-github" class="nav-icon" href="http://github.com/nightspirit"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-ngPaginator" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      ngPaginator
+    </h1>
+  
+
+      </header>
+    
+    <time class="article-date" datetime="2014-09-02T07:00:00.000Z" itemprop="datePublished">09-02-2014</time>
+    
+  </div>
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <img src="/images/ngpaginator.jpg">
+<p>After serveral angular projects, I found out it’s really helpful to warp the pagination logic into directive. Make it open source and release on <a href="https://github.com/nightspirit/ngPaginator" target="_blank" rel="external">github</a>. Feel free to use. :)</p>
+<p><a href="https://github.com/nightspirit/ngPaginator" target="_blank" rel="external">github</a><br><a href="/ngPaginator">live demo</a></p>
+<a id="more"></a>
+<h2 id="How_to_Use">How to Use</h2><ol>
+<li>Declare <strong>paginator</strong> directive in your module.</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">angular.module(<span class="string">'app'</span>,[])</span><br><span class="line">.directive(<span class="string">'paginator'</span>,Paginator);</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">Paginator</span>(<span class="params"></span>)</span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>Declare <strong>startFrom</strong> filter in your module.</li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">.filter(<span class="string">'startFrom'</span>,startFrom)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">startFrom</span>(<span class="params"></span>) </span>&#123; ... &#125;</span><br></pre></td></tr></table></figure>
+<ol>
+<li>In controller, create <strong>model</strong> for binding. <em>(data, curPage, pageSize, pagerSize)</em></li>
+</ol>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// use controller as viewmodel or old fashion $scope for view</span></span><br><span class="line"><span class="keyword">this</span>.data = data; <span class="comment">// array of data</span></span><br><span class="line"><span class="keyword">this</span>.curPage = <span class="number">1</span>; <span class="comment">// current page. External function can change page with this</span></span><br><span class="line"><span class="keyword">this</span>.pageSize = <span class="number">10</span>; <span class="comment">// how many items per page</span></span><br><span class="line"><span class="keyword">this</span>.pagerSize = <span class="number">5</span>; <span class="comment">// how many pagers in paginator (odd number recommended)</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>Create remote template for paginator <em>(Customize for your own need)</em></li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-disabled</span>=<span class="value">"curPage == 1"</span> <span class="attribute">ng-click</span>=<span class="value">"prev()"</span>&gt;</span>Prev<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-repeat</span>=<span class="value">"p in pagers()"</span> <span class="attribute">ng-disabled</span>=<span class="value">"this.p == curPage"</span> <span class="attribute">ng-click</span>=<span class="value">"goPage(this.p)"</span>&gt;</span>&#123;&#123;p&#125;&#125;<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">button</span> <span class="attribute">ng-disabled</span>=<span class="value">"curPage &gt;= maxPage()"</span> <span class="attribute">ng-click</span>=<span class="value">"next()"</span>&gt;</span>Next<span class="tag">&lt;/<span class="title">button</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<ol>
+<li>In html view, you can use directive in controller scope like this.</li>
+</ol>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">// element style</span><br><span class="line"><span class="tag">&lt;<span class="title">paginator</span> <span class="attribute">data</span>=<span class="value">"main.data"</span> <span class="attribute">cur-page</span>=<span class="value">"main.curPage"</span> <span class="attribute">page-size</span>=<span class="value">"main.pageSize"</span> <span class="attribute">pager-size</span>=<span class="value">"main.pagerSize"</span>&gt;</span><span class="tag">&lt;/<span class="title">paginator</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// ngRepeat for each page (where startFrom filter kickin)</span><br><span class="line"><span class="tag">&lt;<span class="title">ul</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="title">li</span> <span class="attribute">ng-repeat</span>=<span class="value">"p in main.data | startFrom:(main.curPage-1)*main.pageSize | limitTo:main.pageSize"</span>&gt;</span>&#123;&#123;p.name&#125;&#125; - &#123;&#123;p.email&#125;&#125;<span class="tag">&lt;/<span class="title">li</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="title">ul</span>&gt;</span></span><br><span class="line"></span><br><span class="line">// Attribute style</span><br><span class="line"><span class="tag">&lt;<span class="title">div</span> <span class="attribute">data</span>=<span class="value">"main.data"</span> <span class="attribute">cur-page</span>=<span class="value">"main.curPage"</span> <span class="attribute">page-size</span>=<span class="value">"main.pageSize"</span> <span class="attribute">pager-size</span>=<span class="value">"main.pagerSize"</span> <span class="attribute">paginator</span>&gt;</span><span class="tag">&lt;/<span class="title">div</span>&gt;</span></span><br></pre></td></tr></table></figure>
+<p>for detail, check out the example code.</p>
+<h2 id="License">License</h2><p>The MIT License (MIT)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pofolio.cc/2014/09/02/ngPaginator/" data-id="cich670xj000i9oos8odoihly" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebDevelop/">WebDevelop</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/angularJS/">angularJS</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/directive/">directive</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/github/">github</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/01/19/tetravex/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Tetravex
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2014/04/01/PayO-Rev2/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">PayO Rev.2</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+			&copy; 2015 Pochen Lin | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> | Theme <a href="https://github.com/steven5538/hexo-theme-athena" target="_blank">Athena</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

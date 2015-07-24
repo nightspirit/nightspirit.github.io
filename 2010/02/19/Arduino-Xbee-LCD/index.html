@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Arduino + Xbee + 2x16 Chars LCD | Po-folio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="After we made the first prototype we found the critical shortcoming of Bluetooth and we thought it is not a good idea to apply BT on our garments.
+The main reason is because BT communication has to pa">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arduino + Xbee + 2x16 Chars LCD">
+<meta property="og:url" content="http://pofolio.cc/2010/02/19/Arduino-Xbee-LCD/index.html">
+<meta property="og:site_name" content="Po-folio">
+<meta property="og:description" content="After we made the first prototype we found the critical shortcoming of Bluetooth and we thought it is not a good idea to apply BT on our garments.
+The main reason is because BT communication has to pa">
+<meta property="og:image" content="http://pofolio.cc/images/2010-03-30_163014.jpg">
+<meta property="og:updated_time" content="2015-07-24T04:55:46.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Arduino + Xbee + 2x16 Chars LCD">
+<meta name="twitter:description" content="After we made the first prototype we found the critical shortcoming of Bluetooth and we thought it is not a good idea to apply BT on our garments.
+The main reason is because BT communication has to pa">
+  
+    <link rel="alternative" href="/atom.xml" title="Po-folio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="/css/extend.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Po-folio</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Full Stack JavaScript Ninja</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-home-icon" class="nav-icon" href="/"></a>
+        
+          <a id="nav-archives-icon" class="nav-icon" href="/archives"></a>
+        
+          <a id="nav-facebook" class="nav-icon" href="http://www.facebook.com/nightspirit"></a>
+        
+          <a id="nav-linkedin" class="nav-icon" href="http://www.linkedin.com/in/pochenlin"></a>
+        
+          <a id="nav-github" class="nav-icon" href="http://github.com/nightspirit"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Arduino-Xbee-LCD" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Arduino + Xbee + 2x16 Chars LCD
+    </h1>
+  
+
+      </header>
+    
+    <time class="article-date" datetime="2010-02-20T00:37:00.000Z" itemprop="datePublished">02-19-2010</time>
+    
+  </div>
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <img src="/images/2010-03-30_163014.jpg">
+<p>After we made the first prototype we found the critical shortcoming of Bluetooth and we thought it is not a good idea to apply BT on our garments.</p>
+<p>The main reason is because BT communication has to pair two devices before working. Once we pair two of them it is not easy interrupting with third garment. We consider BT is not an ideal protocol for peer communication.</p>
+<a id="more"></a>
+<p>So we want to try something else. We aim our solution to Xbee. Xbee and Arduino are perfect for each others because there are existing modules on the market such as Xbee shield, Xbee breakout for easy implementing. Simply plug it to the Arduino and you are ready to go.</p>
+<p>If you are not going to mess around with Zbee 2.5 protocol then everything is easy. The AT command is just a text-based command line interface so all you have to do is follow the instruction and send out the serial message.</p>
+<p>To start the AT command mode you have to wait 1000 millisecond for security gap (Just delay(1000);) and immediately send the serial string <strong>“+++”</strong> to Xbee. Afterward, if you get <strong>“OK”</strong> response then you’ve successfully entered the AT command mode.</p>
+<p>There are some command strings you can find on the official documentation. For example ATDL is the lower destination address. You could set the address attribute with this command like:</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ATDL <span class="tag">address</span> number</span><br></pre></td></tr></table></figure>
+<p>The destination address is corresponding to other Xbee module’s address. If two of them match then the communication would be built up.</p>
+<p>Here is the example. I sent every character via Xbee when I typed. On the client side, it received the message and updated the LCD display with incoming characters.</p>
+<div class="video-container"><iframe src="//www.youtube.com/embed/PJNaxK9MWpg" frameborder="0" allowfullscreen></iframe></div>
+<p><a href="http://blog.kevinhoyt.org/" target="_blank" rel="external">Kevin Hoyt</a> wrote a very clear instruction for Xbee and X-CTU program. I suggest you take a look of <a href="http://blog.kevinhoyt.org/wp-content/xbee-setup.pdf" target="_blank" rel="external">his documentation</a> and try it by yourself.</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pofolio.cc/2010/02/19/Arduino-Xbee-LCD/" data-id="cich670yx004i9oos5rq1u0c2" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arduino/">Arduino</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KimonoMonster/">KimonoMonster</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2010/03/31/Arduino-Processing-Serial/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Arduino &amp; Processing Serial communication
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2010/02/02/Gesture-control-LCD-Accelerometer/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Gesture control menu (LCD+Accelerometer)</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+			&copy; 2015 Pochen Lin | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> | Theme <a href="https://github.com/steven5538/hexo-theme-athena" target="_blank">Athena</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

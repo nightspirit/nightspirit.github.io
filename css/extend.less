@@ -1,0 +1,42 @@
+.headpic{
+	margin: 2em 0;
+	>a{
+		overflow: hidden;
+		height: 400px;
+		display: block;
+		margin: 0 auto;
+
+		> img{
+			position: relative;
+			top: -17%;
+		}
+		
+	}
+  
+}
+
+.gallery{
+	display:inline-block;
+	width:100%;
+
+	> a{
+		display: inline-block;
+		float:left;
+	}
+
+	&.col2 >a{ width:100%/2}
+	&.col3 >a{ width:100%/3}
+	&.col4 >a{ width:100%/4}
+}
+
+@media (max-height: 480px) { 
+  .headpic > a { height: 120px;}
+}
+
+@media (min-height: 480px) and (max-height: 768px) { 
+.headpic > a { height: 200px;}
+}
+
+@media (min-height: 769px) and (max-height: 960px) { 
+  .headpic > a { height: 300px;}
+}

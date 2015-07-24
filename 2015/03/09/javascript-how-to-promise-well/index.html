@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Javascript - How to promise well | Po-folio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="When I deal with async, I go promises (deferred). This is the most “promising” approach which make your code reusable and predictable without fall into callback hell.
+I would like to share you some us">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Javascript - How to promise well">
+<meta property="og:url" content="http://pofolio.cc/2015/03/09/javascript-how-to-promise-well/index.html">
+<meta property="og:site_name" content="Po-folio">
+<meta property="og:description" content="When I deal with async, I go promises (deferred). This is the most “promising” approach which make your code reusable and predictable without fall into callback hell.
+I would like to share you some us">
+<meta property="og:image" content="http://pofolio.cc/images/promises.png">
+<meta property="og:updated_time" content="2015-07-24T05:38:01.324Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Javascript - How to promise well">
+<meta name="twitter:description" content="When I deal with async, I go promises (deferred). This is the most “promising” approach which make your code reusable and predictable without fall into callback hell.
+I would like to share you some us">
+  
+    <link rel="alternative" href="/atom.xml" title="Po-folio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="/css/extend.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Po-folio</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Full Stack JavaScript Ninja</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-home-icon" class="nav-icon" href="/"></a>
+        
+          <a id="nav-archives-icon" class="nav-icon" href="/archives"></a>
+        
+          <a id="nav-facebook" class="nav-icon" href="http://www.facebook.com/nightspirit"></a>
+        
+          <a id="nav-linkedin" class="nav-icon" href="http://www.linkedin.com/in/pochenlin"></a>
+        
+          <a id="nav-github" class="nav-icon" href="http://github.com/nightspirit"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-javascript-how-to-promise-well" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Javascript - How to promise well
+    </h1>
+  
+
+      </header>
+    
+    <time class="article-date" datetime="2015-03-09T07:00:01.000Z" itemprop="datePublished">03-09-2015</time>
+    
+  </div>
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <div class="headpic"><img src="/images/promises.png"></div>
+
+<p>When I deal with async, I go promises (deferred). This is the most “promising” approach which make your code reusable and predictable without fall into callback hell.</p>
+<p>I would like to share you some useful techniques how to promise well. (Those examples are implementing with Jquery deferred but it can apply to any other implementaion.)</p>
+<a id="more"></a>
+<h3 id="User_behavior_as_promise">User behavior as promise</h3><p>Your code might need some user input before it executes next step. So make those user behaviors as promises and use <strong>.then()</strong> to solve them sequentially or <strong>$.when</strong> to aggregate them together. Good for certain type of UI such as DIALOG, PROMPT, FORM, STEPS.</p>
+<iframe width="100%" height="300" src="http://jsfiddle.net//nightspirit622/repynws3/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<h3 id="Mixing_multiple_ajax_responses_into_one">Mixing multiple ajax responses into one</h3><p>I usually make my remote data resource as function return promise. Then I don’t need to define success callback at the beginning. Just chain with .then(callback) afterward. It really gives me lot more flexibility , meanwhile eliminating code duplication e.g. url, ajax config, you will find out only data params will changed in most cases.</p>
+<p>If you want to mix different resources together. here comes your best friend <strong>$.when</strong>. In this example, I fetch <em>posts</em> and <em>comments</em> and mixing the comment into each post entry. The aggregation call can even combine with other call again. Think about the extensibility!</p>
+<iframe width="100%" height="300" src="http://jsfiddle.net//nightspirit622/6sdq61c5/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p><strong>TIPS</strong>: $.ajax return jqxhr which is similar to $.deferred you can use .then for callback or $.when for aggregation. However, the response will be an array when you use $.when. It won’t be the typical response you get.</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">$.get(<span class="string">"url"</span>).then(<span class="function"><span class="keyword">function</span>(<span class="params">data</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// data as typical response you get</span></span><br><span class="line">&#125;);</span><br><span class="line">$.when($.get(<span class="string">"url1"</span>),$.get(<span class="string">"url2"</span>)).then(<span class="function"><span class="keyword">function</span>(<span class="params">res1,res2</span>)</span>&#123;</span><br><span class="line">  <span class="comment">// res1[0] , res2[0] is the data what you usually get from $.get</span></span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+<h3 id="Caching_ajax_calls">Caching ajax calls</h3><p>The fulfilled promise can chain with <strong>.then()</strong> to trigger the callback immediately. So it’s a good idea to cache the previous ajax request (which return a promise). You can reuse the cache later without calling server multiple times for the same data.</p>
+<p>Because you always expect the call will return promise so simply chaining <strong>.then()</strong> everywhere to ensure code consistency. If you need fresh new data, clear the cache or call the fetcher with forceUpdate equal true.</p>
+<iframe width="100%" height="300" src="http://jsfiddle.net//nightspirit622/emz1vyd4/embedded/js,resources,html,css,result/light" frameborder="0" allowfullscreen></iframe>
+<p>You may never heard of those techniques above or already used them widely in your code. Anyway, I hope those can help you rethink “How to promise well?” Let’s say goodbye to callback hell :)</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pofolio.cc/2015/03/09/javascript-how-to-promise-well/" data-id="cich670xt000o9ooshyfpcw78" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Deferred/">Deferred</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Javascript/">Javascript</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Jquery/">Jquery</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Promises/">Promises</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/WebDevelop/">WebDevelop</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2015/07/23/canvas-timer/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Canvas Timer
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2015/02/08/battleshipio-react/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Older</strong>
+      <div class="article-nav-title">Battleship.io React</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+			&copy; 2015 Pochen Lin | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> | Theme <a href="https://github.com/steven5538/hexo-theme-athena" target="_blank">Athena</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>

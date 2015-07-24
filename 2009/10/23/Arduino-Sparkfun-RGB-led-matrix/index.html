@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  <title>Arduino + Sparkfun RGB led matrix HELLO WORLD | Po-folio</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+  <meta name="description" content="In kimono dragons project, the first coming problem was display. After doing some researches we decided to use the led matrix from Sparkfun. The reasons are because it was modularized and it can easil">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Arduino + Sparkfun RGB led matrix HELLO WORLD">
+<meta property="og:url" content="http://pofolio.cc/2009/10/23/Arduino-Sparkfun-RGB-led-matrix/index.html">
+<meta property="og:site_name" content="Po-folio">
+<meta property="og:description" content="In kimono dragons project, the first coming problem was display. After doing some researches we decided to use the led matrix from Sparkfun. The reasons are because it was modularized and it can easil">
+<meta property="og:image" content="http://pofolio.cc/images/2010-03-26_092929.jpg">
+<meta property="og:updated_time" content="2015-07-24T04:55:46.703Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Arduino + Sparkfun RGB led matrix HELLO WORLD">
+<meta name="twitter:description" content="In kimono dragons project, the first coming problem was display. After doing some researches we decided to use the led matrix from Sparkfun. The reasons are because it was modularized and it can easil">
+  
+    <link rel="alternative" href="/atom.xml" title="Po-folio" type="application/atom+xml">
+  
+  
+    <link rel="icon" href="/favicon.png">
+  
+  <link href="//fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet" type="text/css">
+  <link rel="stylesheet" href="/css/style.css" type="text/css">
+	<link rel="stylesheet" href="/css/extend.css" type="text/css">
+  
+</head>
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">Po-folio</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">Full Stack JavaScript Ninja</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="sub-nav">
+        
+          <a id="nav-home-icon" class="nav-icon" href="/"></a>
+        
+          <a id="nav-archives-icon" class="nav-icon" href="/archives"></a>
+        
+          <a id="nav-facebook" class="nav-icon" href="http://www.facebook.com/nightspirit"></a>
+        
+          <a id="nav-linkedin" class="nav-icon" href="http://www.linkedin.com/in/pochenlin"></a>
+        
+          <a id="nav-github" class="nav-icon" href="http://github.com/nightspirit"></a>
+        
+      </nav>
+    </div>
+  </div>
+</header>
+      <div class="outer">
+        <section id="main"><article id="post-Arduino-Sparkfun-RGB-led-matrix" class="article article-type-post" itemscope itemprop="blogPost">
+  <div class="article-meta">
+    
+      <header class="article-header">
+        
+  
+    <h1 class="article-title" itemprop="name">
+      Arduino + Sparkfun RGB led matrix HELLO WORLD
+    </h1>
+  
+
+      </header>
+    
+    <time class="article-date" datetime="2009-10-23T16:28:00.000Z" itemprop="datePublished">10-23-2009</time>
+    
+  </div>
+  <div class="article-inner">
+    <div class="article-entry" itemprop="articleBody">
+      
+        <img src="/images/2010-03-26_092929.jpg">
+<p>In <a href="http://www.kimonodragonsproject.com/index.php" target="_blank" rel="external">kimono dragons project</a>, the first coming problem was display. After doing some researches we decided to use the <a href="http://www.sparkfun.com/commerce/product_info.php?products_id=760" target="_blank" rel="external">led matrix from Sparkfun</a>. The reasons are because it was modularized and it can easily communicate with SPI protocol.</p>
+<p>However, I had a tough time with it at the beginning, especially when I am not familiar with Arduino. I got stuck at some tricky points and took quite a long time to figure it out how to fix it.</p>
+<a id="more"></a>
+<p>First of all, you have to deal with the SPI protocol. The SPI interface is based on 4 PINs to communicate. They are</p>
+<ul>
+<li><strong>SCLK</strong> - System Clock which is pin <strong>13</strong></li>
+<li><strong>MOSI</strong> - Master Out Slave In which is pin <strong>11</strong></li>
+<li><strong>MISO</strong> - Master In Slave Out which is pin <strong>12</strong></li>
+<li><strong>CS</strong> – Chip Select which can be <strong>any other digital pins</strong></li>
+</ul>
+<p><em>(if you treat Arduino as a slave SPI device, then pin 10 is the CS PIN)</em></p>
+<p>In this demonstration, we only use three of them: <strong>SCLK, MOSI, CS</strong>. Connect them to the corresponding holes on the matrix input then we can move to next stage.</p>
+<p>For the sketch part, I highly recommend you to use the <a href="http://www.arduino.cc/playground/Code/Spi" target="_blank" rel="external">SPI library</a> from Arduino playground. It makes less confusion then other examples you found online. Simply include the <strong>spi.h</strong> into your sketch then you are ready to code.</p>
+<p>You should care about the clock issue. The Sparkfun matrix can only be operated on <strong>125 KHz</strong> frequency. So you need to change the default setting in the setup function. The code is as follow: <em>(if you are using the Duemilanove or ATMEGA328 series)</em><br><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Spi.mode(SPCR | B<span class="number">00000011</span>)<span class="comment">;</span></span><br></pre></td></tr></table></figure></p>
+<p>The procedure of each frame is as follow:</p>
+<ol>
+<li>Pull chipselect pin down.</li>
+<li>Delay 1 millisecond</li>
+<li>Fill 64 bytes of color data</li>
+<li>Pull chipselect pin high.</li>
+<li>Delay 1 millisecond</li>
+</ol>
+<p>For main loop, you should write several sub functions like drawing the pattern on the buffer, blanking and updating the screen. Afterward, apply them into your sequence.</p>
+<p>It should be working like this video.<br><div class="video-container"><iframe src="//www.youtube.com/embed/UQsix3uyO5Y" frameborder="0" allowfullscreen></iframe></div></p>
+<p>Good Luck!</p>
+
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="http://pofolio.cc/2009/10/23/Arduino-Sparkfun-RGB-led-matrix/" data-id="cich670z7004l9ooskeh1m0wv" class="article-share-link">Share</a>
+      
+      
+  <ul class="article-tag-list"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Arduino/">Arduino</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/KimonoMonster/">KimonoMonster</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2009/11/25/Arduino-Bluetooth-Cellphone/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">Newer</strong>
+      <div class="article-nav-title">
+        
+          Bluetooth communication between Cell phone &amp; Arduino BT
+        
+      </div>
+    </a>
+  
+  
+</nav>
+
+  
+</article>
+
+</section>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+			&copy; 2015 Pochen Lin | Powered by <a href="http://hexo.io/" target="_blank">Hexo</a> | Theme <a href="https://github.com/steven5538/hexo-theme-athena" target="_blank">Athena</a>
+    </div>
+  </div>
+</footer>
+    </div>
+    
+
+<script src="//ajax.googleapis.com/ajax/libs/jquery/2.0.3/jquery.min.js"></script>
+
+
+  <link rel="stylesheet" href="/fancybox/jquery.fancybox.css" type="text/css">
+  <script src="/fancybox/jquery.fancybox.pack.js" type="text/javascript"></script>
+
+
+<script src="/js/script.js" type="text/javascript"></script>
+  </div>
+</body>
+</html>
